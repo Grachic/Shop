@@ -1,0 +1,18 @@
+﻿@model MyModel
+
+<h1>Add Model</h1>
+
+<form method="post">
+	<p>
+		<label asp-for="Name"></label>
+		<input asp-for="Name" class="form-control" />
+	</p>
+	<p>
+		<label asp-for="Number"></label>
+		<input asp-for="Number" class="form-control" />
+	</p>
+	<p>
+		<input type="submit" class="btn btn-success" value="Create" />
+		<a class="btn btn-primary" hasp-controller="MyModel" asp-action="Index">Back</a>
+	</p>
+</form>
