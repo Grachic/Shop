@@ -74,14 +74,14 @@ namespace TurboFishShop.Controllers
                     return NotFound();
                 }
 
-                return View();
+                return View(productViewModel);
             }
             
         }
 
         // POST - CreateEdit
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public IActionResult CreateEdit(ProductViewModel productViewModel)
         {
             var files = HttpContext.Request.Form.Files;

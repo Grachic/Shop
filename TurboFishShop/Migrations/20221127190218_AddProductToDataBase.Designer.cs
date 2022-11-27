@@ -11,7 +11,7 @@ using TurboFishShop.Data;
 namespace TurboFishShop.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20221120173206_AddProductToDataBase")]
+    [Migration("20221127190218_AddProductToDataBase")]
     partial class AddProductToDataBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
