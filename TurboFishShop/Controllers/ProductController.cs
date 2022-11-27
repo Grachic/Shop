@@ -10,23 +10,25 @@ namespace TurboFishShop.Controllers
 	public class ProductController : Controller
 	{
         private ApplicationDBContext db;
+        private IWebHostEnvironment webHostEnvironment;
 
-        public ProductController(ApplicationDBContext db)
+        public ProductController(ApplicationDBContext db, IWebHostEnvironment webHostEnvironment)
         {
             this.db = db;
+            this.webHostEnvironment = webHostEnvironment;
         }
         
         // GET INDEX
         public IActionResult Index()
 		{
             IEnumerable<Product> objList =  db.Product;
-
+            /*
             // получаем ссылки на сущности категорий
             foreach (var item in objList)
             {
                 item.Category = db.Categories.FirstOrDefault(x => x.Id == item.CategoryId);
             }
-
+            */
 			return View(objList);
 		}
 
@@ -75,6 +77,45 @@ namespace TurboFishShop.Controllers
                 return View();
             }
             
+        }
+
+        // POST - CreateEdit
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public IActionResult CreateEdit(ProductViewModel productViewModel)
+        {
+            var files = HttpContext.Request.Form.Files;
+
+            string wwwRoot = webHostEnvironment.WebRootPath;
+
+            if (productViewModel.Product.Id == 0)
+            {
+                // create
+                string upload = wwwRoot + PathsManager.ImageProductPath;
+                string imageName = Guid.NewGuid().ToString();
+
+                string extension = Path.GetExtension(files[0].FileName);
+
+                string path = upload + imageName + extension;
+
+                // скопируем файл на сервер
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    files[0].CopyTo(fileStream);
+                }
+
+                productViewModel.Product.Image = imageName + extension;
+
+                db.Product.Add(productViewModel.Product);
+            }
+            else
+            {
+                // update
+            }
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }
