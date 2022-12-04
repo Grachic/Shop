@@ -11,8 +11,8 @@ using TurboFishShop.Data;
 namespace TurboFishShop.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20221127190218_AddProductToDataBase")]
-    partial class AddProductToDataBase
+    [Migration("20221204170814_AddProductToDatabase")]
+    partial class AddProductToDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -82,6 +82,9 @@ namespace TurboFishShop.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("MyModelId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -92,6 +95,8 @@ namespace TurboFishShop.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("MyModelId");
 
                     b.ToTable("Product");
                 });
@@ -104,7 +109,15 @@ namespace TurboFishShop.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TurboFishShop.Models.MyModel", "MyModel")
+                        .WithMany()
+                        .HasForeignKey("MyModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("MyModel");
                 });
 #pragma warning restore 612, 618
         }

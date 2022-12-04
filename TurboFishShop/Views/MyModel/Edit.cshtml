@@ -1,0 +1,37 @@
+﻿@model MyModel
+
+<h1>Edit MyModel</h1>
+
+<form method="post">
+
+	<!-- Передача скрытых данных -->
+	<input asp-for="Id" hidden />
+
+	<p>
+		<label asp-for="Name"></label>
+		<input asp-for="Name" class="form-control" />
+		<span asp-validation-for="Name" class="text-danger"></span>
+	</p>
+	<p>
+		<label asp-for="Number"></label>
+		<input asp-for="Number" class="form-control" />
+		<span asp-validation-for="Number" class="text-danger"></span>
+	</p>
+	<p>
+		<input type="submit" class="btn btn-success"  value="Update" />
+		<a class="btn btn-primary" hasp-controller="MyModel" asp-action="Index">
+			<i class="fa-solid fa-caret-left"></i>
+			Back
+		</a>
+	</p>
+
+	<p>
+		<div asp-validation-summary="All"></div>
+	</p>
+</form>
+
+@section Scripts {
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}

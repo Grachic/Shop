@@ -37,5 +37,76 @@ namespace TurboFishShop.Controllers
 
             return RedirectToAction("Index");  //переход на страницу Index
         }
-    }
+
+		// GET - Edit
+		[HttpGet]
+		public IActionResult Edit(int? id)
+		{
+			if (id == null || id == 0)
+			{
+				return NotFound();
+			}
+
+			var model = db.MyModels.Find(id);
+
+			if (model == null)
+			{
+				return NotFound();
+			}
+
+			return View(model);
+		}
+
+		//POST - Edit
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult Edit(MyModel model)
+		{
+			if (ModelState.IsValid) // проверка модели на валидность
+			{
+				db.MyModels.Update(model);  // !!!
+				db.SaveChanges();
+				return RedirectToAction("Index"); //переход на страницу Index
+			}
+
+			return View(model);
+		}
+
+		// GET - Delete
+		[HttpGet]
+		public IActionResult Delete(int? id)
+		{
+			if (id == null || id == 0)
+			{
+				return NotFound();
+			}
+
+			var model = db.MyModels.Find(id);
+
+			if (model == null)
+			{
+				return NotFound();
+			}
+
+			return View(model);
+		}
+
+		//POST - Delete
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult DeletePost(int? id)
+		{
+			var model = db.MyModels.Find(id);
+
+			if (model == null)
+			{
+				return NotFound();
+			}
+
+			db.MyModels.Remove(model);
+			db.SaveChanges();
+
+			return RedirectToAction("Index");
+		}
+	}
 }

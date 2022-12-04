@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using TurboFishShop.Models;
 
 namespace TurboFishShop.Data
@@ -12,8 +11,7 @@ namespace TurboFishShop.Data
 
         }
         public DbSet<Category> Categories { get; set; } 
-        public DbSet<MyModel> MyModels { get; set; } 
-
-        public DbSet<Product> Product { get; set; }
-    }
+        public DbSet<MyModel> MyModels { get; set; }
+		public DbSet<Product> Product { get; set; }
+	}
 }

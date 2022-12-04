@@ -16,7 +16,6 @@
 			<tr>
 				<th>Name</th>
 				<th>Number</th>
-				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -25,7 +24,16 @@
 				<tr>
 					<td width="50%">@item.Name</td>
 					<td width="30%">@item.Number</td>
-					<td width="20%"> - </td>
+					<td width="20%">
+						<a class="btn btn-primary" asp-controller="MyModel" asp-action="Edit" asp-route-Id="@item.Id">
+							<i class="fa-solid fa-pen-to-square"></i>
+							Edit
+						</a>
+						<a class="btn btn-danger" asp-controller="MyModel" asp-action="Delete" asp-route-Id="@item.Id">
+							<i class="fa-solid fa-eraser"></i>
+							Delete
+						</a>
+					</td>
 				</tr>
 			}
 		</tbody>

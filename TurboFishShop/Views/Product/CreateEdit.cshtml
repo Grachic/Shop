@@ -36,18 +36,32 @@
 	</p>
 
 	<p>
+		<label asp-for="Product.ShortDescription"></label>
+		<input asp-for="Product.ShortDescription" class="form-control" />
+		<span asp-validation-for="Product.ShortDescription" class="text-danger"></span>
+	</p>
+
+	<p>
 		<label asp-for="Product.Image"></label>
 		<input type="file" name="files" class="form-control" id="uploadedImage" multiple />
 	</p>
 
 	<p>
 		<label asp-for="Product.CategoryId"></label>
-		<!--<select asp-for="CategoryId" asp-items="@ViewBag.CategoriesList" class="form-control">-->
-		<!--<select asp-for="CategoryId" asp-items="@ViewData["CategoriesList"] as IEnumerable<SelectListItem>" class="form-control">-->
+		<!--<select asp-for="CategoryId" asp-items="ViewBag.CategoriesList" class="form-control">-->
+		<!--<select asp-for="CategoryId" asp-items="ViewData["CategoriesList"] as IEnumerable<SelectListItem>" class="form-control">-->
 		<select asp-for="Product.CategoryId" asp-items="@Model.CategoriesList" class="form-control">
 			<option disabled selected>-- Выберите категорию --</option>
 		</select>
 		<span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+	</p>
+
+	<p>
+		<label asp-for="Product.MyModelId"></label>
+		<select asp-for="Product.MyModelId" asp-items="@Model.MyModelsList" class="form-control">
+			<option disabled selected>-- Выберите модель --</option>
+		</select>
+		<span asp-validation-for="Product.MyModelId" class="text-danger"></span>
 	</p>
 
 	<p>
@@ -59,9 +73,9 @@
 		{
 			<input type="submit" onclick="input()" class="btn btn-success" value="Create" />
 		}
-		<a class="btn btn-primary" hasp-controller="Category" asp-action="Index">
-				<i class="fa-solid fa-caret-left"></i>
-				Back
+		<a class="btn btn-primary" hasp-controller="Product" asp-action="Index">
+			<i class="fa-solid fa-caret-left"></i>
+			Back
 		</a>
 	</p>
 
@@ -70,31 +84,35 @@
 	</p>
 </form>
 
+
+@if (Model.Product.Id != 0)
+{
+	<p>
+	<img src="@PathsManager.ImageProductPath@Model.Product.Image" width="150"/>
+	</p>
+}
+
 @section Scripts {
-	@{
-	<partial name="_ValidationScriptsPartial" />
-	}
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
 
-	<script>
-		/* editor */
-		$(document).ready(function () {
-			$('.summernote').summernote({
-				height: 300
-			});
-		});
-
-		/* alert */
-		function input() {
-			if (document.getElementById("uploadedImage").value == "")
-			{
-				Swal.fire(
-					'Error!',
-					'Please upload the Image!',
-					'error'
-				)
-				return false;
-			}
-			return true;
-		}
-	</script>
+    <script>/* editor */
+        $(document).ready(function () {
+            $('.summernote').summernote({
+                height: 200
+            });
+        });
+        /* alert */
+        function input() {
+            if (document.getElementById("uploadedImage").value == "") {
+                Swal.fire(
+                    'Error!',
+                    'Please upload image!',
+                    'error'
+                )
+                return false;
+            }
+            return true;
+        }</script>
 }

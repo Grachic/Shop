@@ -13,6 +13,8 @@ namespace TurboFishShop.Models
 
 		public string Description { get; set; }
 
+		public string ShortDescription { get; set; }
+
 		[Required]
 		[Range(1, int.MaxValue, ErrorMessage = "Value must be more than 1.")]
 		public double Price { get; set; }
@@ -26,5 +28,11 @@ namespace TurboFishShop.Models
 		// добавление внешнего ключа
 		[ForeignKey("CategoryId")]
 		public virtual Category Category { get; set; }
+
+		[Display(Name = "MyModel Id")]
+		public int MyModelId { get; set; }
+
+		[ForeignKey("MyModelId")]
+		public virtual MyModel MyModel { get; set; }
 	}
 }
