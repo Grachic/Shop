@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TurboFishShop.Data;
 
@@ -17,6 +18,9 @@ builder.Services.AddDbContext<ApplicationDBContext>(
 	options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 	);
 
+// для генерации таблиц в БД
+builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDBContext>();
+
 builder.Services.AddControllersWithViews();  // MVC
 
 var app = builder.Build();
@@ -33,6 +37,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+
+app.UseAuthentication();  // added
+
 
 app.UseAuthorization();
 

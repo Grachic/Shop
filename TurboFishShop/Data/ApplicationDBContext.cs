@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TurboFishShop.Models;
 
 namespace TurboFishShop.Data
 {
-    public class ApplicationDBContext : DbContext
+    public class ApplicationDBContext : IdentityDbContext  // изменили наследование
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) :
             base(options) 
