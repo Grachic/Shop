@@ -1,14 +1,12 @@
 ﻿@model TurboFishShop.Models.Product
 
-<h1>Product Card</h1>
-
-<div class="card" style="width: 18rem;">
-  <img src="@PathsManager.ImageProductPath@Model.Image" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">@Model.Name</h5>
-    <p class="card-text">
-        @Model.ShortDescription
-    </p>
-    <a href="#" class="btn btn-primary">Details</a>
-  </div>
+<div class="card filter @Model.Category.Name.Replace(' ', '_') " style="display:flex;float:left; width: 18rem; height:25rem; margin: 5px; border: groove; border-width:2px;">
+    <img src="@PathsManager.ImageProductPath@Model.Image" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text">@Model.ShortDescription</p>
+        <span class="badge text-bg-primary">Primary</span>
+		<!-- controller дефолтный -->
+        <a asp-action="Details" asp-route-Id="@Model.Id" class="btn btn-primary">Detail</a>
+    </div>
 </div>

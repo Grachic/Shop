@@ -1,0 +1,42 @@
+﻿@model TurboFishShop.Models.ViewModels.DetailsViewModel
+
+@{
+	ViewData["Title"] = "Details";
+}
+
+<form method="post" asp-action="DetailsPost">
+
+	<p>
+		<input asp-for="Product.Id" hidden />
+	</p>
+	
+	<p>
+		<h2>@Model.Product.Name</h2>
+		<h2>@Model.Product.Price</h2>
+	</p>
+
+	<p>
+		<img src="@PathsManager.ImageProductPath@Model.Product.Image" width="200" />
+	</p>
+
+	<p>
+		<h3>@Model.Product.Category.Name</h3>
+	</p>
+
+	<p>
+		@Html.Raw(Model.Product.Description)
+	</p>
+
+	<p>
+		<a asp-action="Index" class="btn btn-primary">Back</a>
+
+		@if (Model.IsInCart)
+		{
+			<a asp-action="RemoveFromCart" asp-route-id="@Model.Product.Id" class="btn btn-warning">Remove from cart</a>
+		}
+		else
+		{
+			<a asp-action="AddToCart" asp-route-id="@Model.Product.Id" class="btn btn-primary">Add to cart</a>
+		}
+	</p>
+</form>

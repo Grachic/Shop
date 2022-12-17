@@ -4,6 +4,7 @@ using System.Diagnostics;
 using TurboFishShop.Data;
 using TurboFishShop.Models;
 using TurboFishShop.Models.ViewModels;
+using TurboFishShop.Utility;
 
 namespace TurboFishShop.Controllers
 {
@@ -28,6 +29,71 @@ namespace TurboFishShop.Controllers
 
             return View(homeViewModel);
         }
+
+        public IActionResult Details(int id)
+        {
+			List<Cart> cartList = new List<Cart>();
+
+			if (HttpContext.Session.Get<IEnumerable<Cart>>(PathsManager.SessionCart) != null &&
+				HttpContext.Session.Get<IEnumerable<Cart>>(PathsManager.SessionCart).Count() > 0)
+			{
+				cartList = HttpContext.Session.Get<List<Cart>>(PathsManager.SessionCart);
+
+			}
+
+			DetailsViewModel detailsViewModel = new DetailsViewModel()
+            {
+                Product = db.Product.Include(p => p.Category).Where(p => p.Id == id).FirstOrDefault(),
+                IsInCart = false,
+            };
+
+            // проверка на наличие товара в корзине
+            // если товар есть, то меняем свойство
+			foreach (var item in cartList)
+			{
+				if (item.ProductId == id)
+				{
+					detailsViewModel.IsInCart = true;
+				}
+			}
+
+
+			return View(detailsViewModel);
+        }
+
+		[HttpPost]
+		public IActionResult RemoveFromCart(int id)
+		{
+			List<Cart> cartList = new List<Cart>();
+			if (HttpContext.Session.Get<IEnumerable<Cart>>(PathsManager.SessionCart) != null &&
+				HttpContext.Session.Get<IEnumerable<Cart>>(PathsManager.SessionCart).Count() > 0)
+			{
+				cartList = HttpContext.Session.Get<List<Cart>>(PathsManager.SessionCart);
+			}
+			cartList.Remove(cartList.Find(x => x.ProductId == id));
+
+			HttpContext.Session.Set(PathsManager.SessionCart, cartList);
+			return RedirectToAction("Index");
+		}
+
+		[HttpPost]
+		public IActionResult DetailsPost(int id)
+        {
+			List<Cart> cartList = new List<Cart>();
+            
+            if (HttpContext.Session.Get<IEnumerable<Cart>>(PathsManager.SessionCart) != null &&
+				HttpContext.Session.Get<IEnumerable<Cart>>(PathsManager.SessionCart).Count() > 0)
+			{
+                cartList = HttpContext.Session.Get<List<Cart>>(PathsManager.SessionCart);
+
+			}
+
+			cartList.Add(new Cart { ProductId = id });
+
+			HttpContext.Session.Set(PathsManager.SessionCart, cartList);
+
+			return RedirectToAction("Index");
+		}
 
         public IActionResult Privacy()
         {
