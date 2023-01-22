@@ -85,7 +85,6 @@ namespace TurboFishShop.Controllers
 				HttpContext.Session.Get<IEnumerable<Cart>>(PathsManager.SessionCart).Count() > 0)
 			{
                 cartList = HttpContext.Session.Get<List<Cart>>(PathsManager.SessionCart);
-
 			}
 
 			cartList.Add(new Cart { ProductId = id });

@@ -24,6 +24,9 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
+					<partial name="_LoginPartial" />
+
 					<ul class="navbar-nav flex-grow-1">
 						<li class="nav-item">
 							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -42,6 +45,12 @@
 								<li class="nav-item">
 									<a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Product</a>
 								</li>
+								
+								<div class="dropdown-divider"></div>
+								
+								<li class="nav-item">
+									<a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register Admin User</a>
+								</li>
 							</ul>
 						</li>
 
@@ -50,13 +59,13 @@
 							{
 								var count = HttpContextAccessor.HttpContext.Session.Get<List<Cart>>(PathsManager.SessionCart).Count;
 
-								<a href="#" class="nav-link">
+								<a asp-controller="Cart" class="nav-link">
 									<i class="fas fa-shopping-cart"></i> &nbsp; (@count)
 								</a>
 							}
 							else
 							{
-								<a href="#" class="nav-link">
+								<a asp-controller="Cart" class="nav-link">
 									<i class="fas fa-shopping-cart"></i> &nbsp; (0)
 								</a>
 							}

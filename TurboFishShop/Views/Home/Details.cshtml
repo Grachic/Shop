@@ -4,7 +4,7 @@
 	ViewData["Title"] = "Details";
 }
 
-<form method="post" asp-action="DetailsPost">
+<form method="post">
 
 	<p>
 		<input asp-for="Product.Id" hidden />
@@ -36,7 +36,7 @@
 		}
 		else
 		{
-			<a asp-action="AddToCart" asp-route-id="@Model.Product.Id" class="btn btn-primary">Add to cart</a>
+			<a asp-action="DetailsPost" asp-route-id="@Model.Product.Id" class="btn btn-primary">Add to cart</a>
 		}
 	</p>
 </form>

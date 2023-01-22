@@ -1,25 +1,35 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using TurboFishShop.Data;
+using TurboFishShop.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddHttpContextAccessor();  // нужно для работы с сессиями для View
+builder.Services.AddHttpContextAccessor();  // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ View
 
 builder.Services.AddSession(options =>
 {
-	options.Cookie.Name = ".Session";
+	options.Cookie.Name = "Session";
 	// options.IdleTimeout = TimeSpan.FromSeconds(10);
-}); // для работы с сессиями
+}); // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 builder.Services.AddDbContext<ApplicationDBContext>(
 	options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 	);
 
-// для генерации таблиц в БД
-builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDBContext>();
+// пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ
+//builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDBContext>();
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+	.AddDefaultUI().AddDefaultTokenProviders()
+	.AddEntityFrameworkStores<ApplicationDBContext>();
+
+builder.Services.AddTransient<IEmailSender, EmailSender>(); // EMAIL SENDER
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllersWithViews();  // MVC
 
@@ -48,13 +58,16 @@ app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");
 
+
+app.MapRazorPages();  // РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ РјР°СЂС€СЂСѓС‚Р° Рє СЃС‚СЂР°РЅРёС†Сѓ Razor
+
 /* app.Use((context, next) =>
 {
     context.Items["name"] = "Dany";
     return next.Invoke();
 }); */
 
-app.UseSession();  // добавление middleware для работы с сессиями
+app.UseSession();  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ middleware пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 /* app.Run(x =>
 {
