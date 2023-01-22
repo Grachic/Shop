@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using TurboFishShop.Data;
 using TurboFishShop.Models;
 
 namespace TurboFishShop.Controllers
 {
-    public class CategoryController : Controller
+	[Authorize(Roles = PathsManager.AdminRole)]
+	public class CategoryController : Controller
     {
         private ApplicationDBContext db;
 

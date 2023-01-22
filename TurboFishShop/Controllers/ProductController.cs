@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
@@ -8,6 +9,7 @@ using TurboFishShop.Models.ViewModels;
 
 namespace TurboFishShop.Controllers
 {
+	[Authorize(Roles = PathsManager.AdminRole)]
 	public class ProductController : Controller
 	{
         private ApplicationDBContext db;

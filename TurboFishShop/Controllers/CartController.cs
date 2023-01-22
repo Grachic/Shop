@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TurboFishShop.Data;
@@ -16,10 +17,16 @@ namespace TurboFishShop.Controllers
 
 		ProductUserViewModel productUserViewModel;
 
-        public CartController(ApplicationDBContext db)
-        {
+		IWebHostEnvironment webHostEnvironment;
+
+		IEmailSender emailSender;
+
+		public CartController(ApplicationDBContext db, IWebHostEnvironment webHostEnvironment, IEmailSender emailSender)
+		{
             this.db = db;
-        }
+			this.webHostEnvironment = webHostEnvironment;
+			this.emailSender = emailSender;
+		}
 
         public IActionResult Index()
         {
@@ -59,6 +66,49 @@ namespace TurboFishShop.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
+		public IActionResult InquiryConfirmation()
+		{
+			HttpContext.Session.Clear(); // очистить данные сессии
+			
+			return View();
+		}
+
+
+		[HttpPost]
+		public async Task<IActionResult> SummaryPost(ProductUserViewModel productUserViewModel)
+		{
+			// код для отправки сообщения
+			// combine
+			var path = webHostEnvironment.WebRootPath += Path.DirectorySeparatorChar.ToString() +
+				"templates" + Path.DirectorySeparatorChar.ToString() + "Inquiry.html";
+
+			var subject = "New Order";
+
+			var bodyHtml = "";
+
+			using (StreamReader reader = new StreamReader(path))
+			{
+				bodyHtml = reader.ReadToEnd();
+			}
+
+			string textProducts = "";
+			foreach (var item in productUserViewModel.ProductList)
+			{
+				textProducts += $"- Name: {item.Name}, ID: {item.Id}\n";
+			}
+
+			string body = string.Format(bodyHtml, 
+				productUserViewModel.ApplicationUser.FullName,
+				productUserViewModel.ApplicationUser.Email, 
+				productUserViewModel.ApplicationUser.PhoneNumber, 
+				textProducts);
+
+			await emailSender.SendEmailAsync(productUserViewModel.ApplicationUser.Email, subject, body);
+			await emailSender.SendEmailAsync("Max2827@yandex.ru", subject, body);
+
+			return RedirectToAction("InquiryConfirmation");
+		}
+
 		[HttpPost]
 		public IActionResult Summary()
         {
@@ -82,7 +132,7 @@ namespace TurboFishShop.Controllers
 			productUserViewModel = new ProductUserViewModel()
 			{
 				ApplicationUser = db.ApplicationUsers.FirstOrDefault(x => x.Id == claim.Value),
-				ProductList = productList
+				ProductList = productList.ToList()
 			};
 
 			return View(productUserViewModel);

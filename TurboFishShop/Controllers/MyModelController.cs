@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using TurboFishShop.Data;
 using TurboFishShop.Models;
 
 namespace TurboFishShop.Controllers
 {
-    public class MyModelController : Controller
+	[Authorize(Roles = PathsManager.AdminRole)]
+	public class MyModelController : Controller
     {
         private ApplicationDBContext db;
 
