@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
-using TurboFishShop.Data;
+using TurboFishShop_Data;
 using TurboFishShop.Models;
+using TurboFishShop_Models;
+using TurboFishShop_Utility;
 
 namespace TurboFishShop.Controllers
 {

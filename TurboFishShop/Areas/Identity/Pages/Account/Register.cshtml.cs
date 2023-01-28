@@ -19,6 +19,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using TurboFishShop.Models;
+using TurboFishShop_Models;
+using TurboFishShop_Utility;
 
 namespace TurboFishShop.Areas.Identity.Pages.Account
 {

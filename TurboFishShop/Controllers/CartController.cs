@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using TurboFishShop.Data;
+using TurboFishShop_Data;
 using TurboFishShop.Models;
 using TurboFishShop.Models.ViewModels;
-using TurboFishShop.Utility;
+using TurboFishShop_Models;
+using TurboFishShop_Models.ViewModels;
+using TurboFishShop_Utility;
 
 namespace TurboFishShop.Controllers
 {

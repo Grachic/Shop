@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using TurboFishShop.Data;
-using TurboFishShop.Utility;
+using TurboFishShop_Data;
+using TurboFishShop_Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 

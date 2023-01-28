@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
-using TurboFishShop.Data;
+using TurboFishShop_Data;
 using TurboFishShop.Models;
 using TurboFishShop.Models.ViewModels;
+using TurboFishShop_Models;
+using TurboFishShop_Utility;
 
 namespace TurboFishShop.Controllers
 {

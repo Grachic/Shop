@@ -23,4 +23,10 @@
     <Folder Include="wwwroot\images\product\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TurboFishShop_DataMigrations\TurboFishShop_DataMigrations.csproj" />
+    <ProjectReference Include="..\TurboFishShop_Models\TurboFishShop_Models.csproj" />
+    <ProjectReference Include="..\TurboFishShop_Utility\TurboFishShop_Utility.csproj" />
+  </ItemGroup>
+
 </Project>
